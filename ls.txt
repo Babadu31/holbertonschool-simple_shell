@@ -1,0 +1,8 @@
+total 72
+-rw-r--r-- 1 babadu31 babadu31    30 Jul 25 10:50 README.md
+-rwxr-xr-x 1 babadu31 babadu31 16872 Jul 28 12:10 a.out
+-rwxr-xr-x 1 babadu31 babadu31 16696 Jul 28 10:38 bash
+-rw-r--r-- 1 babadu31 babadu31   412 Jul 28 12:10 bash.c
+-rwxr-xr-x 1 babadu31 babadu31 16744 Jul 28 11:22 fibus
+-rw-r--r-- 1 babadu31 babadu31     0 Jul 28 13:17 ls.txt
+-rw-r--r-- 1 babadu31 babadu31   854 Jul 26 13:59 simpleshell.c

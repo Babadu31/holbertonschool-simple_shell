@@ -1,0 +1,31 @@
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main(int argc, char *argv[], char *envp[])
+{
+  pid_t child; // To store the child process ID returned by fork()
+  char *command[] = {"/bin/ls", "-l", NULL}; // execve expects an array of strings, starting with the command
+  int status; // Used to capture the result of executing `ls -l'
+
+  child = fork();
+  if (child == -1) // If fork() fails it does not create a child and returns -1
+    write(1, "Problems\n", 9);
+  if (child == 0) // In the child process
+    {
+      if (execve(command[0], command, envp)) // execve only returns if it encountered an error
+	{
+	  write(1, "Child Problems\n", 15);
+	  return(-1);
+	}
+    }
+  if (child > 0)
+    {
+      wait(&status);
+      if (status == 0)
+	write(1, "Success!\n", 9);
+      else
+	write(1, "Uhhh...\n", 8);
+    }
+  return (status);
+}
