@@ -34,8 +34,6 @@ if (execve(token, argv, env) == -1)
 perror("./simpleshell");
 free(buf);
 return (0);
-if (argc != 3)
-
 {
 printf("Usage: ./program string1 string2\n");
 exit(EXIT_FAILURE);
@@ -47,9 +45,4 @@ wait(&status);
 buf = NULL;
 }
 return (0);
-
-trap date SIGINT
-read input
-echo User input : $input
-echo Exiting now
 }
