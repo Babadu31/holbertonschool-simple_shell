@@ -8,12 +8,11 @@
 /**
  * main - dddd
  * @argv: dsdd
- * @argc: dsdsd
  * @env: sdsd
  * Return: ffd
  */
 
-int main(int argc, char **argv, char **env)
+int main(char **argv, char **env)
 {
 size_t len;
 char *buf;
