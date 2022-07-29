@@ -37,8 +37,8 @@ return (0);
 }
 else
 wait(&status);
-buf = NULL;
 }
 free(buf);
+buf = NULL;
 return (0);
 }
