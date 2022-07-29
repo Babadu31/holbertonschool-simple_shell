@@ -32,12 +32,12 @@ if (child == 0)
 {
 if (execve(token, argv, env) == -1)
 perror("./simpleshell");
-free(buf);
 return (0);
 }
 else
 wait(&status);
 buf = NULL;
 }
+free(buf);
 return (0);
 }
