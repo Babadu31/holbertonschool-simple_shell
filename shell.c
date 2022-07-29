@@ -32,8 +32,8 @@ child = fork();
 if (child == 0)
 {
 if (execve(token, argv, env) == -1)
-perror("./shell");
-return (0);
+perror("Error: ");
+return (-1);
 }
 else
 wait(&status);
