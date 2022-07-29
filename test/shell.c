@@ -1,68 +1,180 @@
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#include<unistd.h>
-#include<sys/types.h>
-#include<sys/wait.h>
-#include<readline/readline.h>
-#include<readline/history.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
-#define MAXCOM 1000 // max number of letters to be supported
-#define MAXLIST 100 // max number of commands to be supported
 
-// Clearing the shell using escape sequences
-#define clear() printf("\033[H\033[J")
+#if HAVE_SYS_WAIT_H
+#include <sys/wait.h>
+#endif
 
-// Greeting shell during startup
-void init_shell()
+sig_atomic_t got_signal     = 0;    /* General signal flag (break capture) */
+
+sig_atomic_t got_sighup     = 0;    /* SIGHUP flag  */
+sig_atomic_t got_sigint     = 0;    /* SIGINT flag  */
+sig_atomic_t got_sigterm    = 0;    /* SIGTERM flag */
+sig_atomic_t got_sigusr1    = 0;    /* SIGUSR1 flag */
+sig_atomic_t got_sigusr2    = 0;    /* SIGUSR2 flag */
+sig_atomic_t got_sigchld    = 0;    /* SIGCHLD flag */
+
+sigset_t    *csmask;
+
+/* SIGHUP Handler
+ */
+void
+sig_handler(int sig)
 {
-  clear();
-  printf("\n\n\n\n******************"
-	 "************************");
-  printf("\n\n\n\t****SHELL****");
-  printf("\n\n\t******************");
-  printf("\n\n\n\n*******************"
-	 "***********************");
-  char* username = getenv("USER");
-  printf("\n\n\nUSER is: @%s", username);
-  printf("\n");
-  sleep(3);
-  clear();
-}
+  int o_errno;
+  got_signal = sig;
 
-// Function to take input
-int takeInput(char* str)
-{
-  char* buf;
-
-  buf = readline("\n>>> ");
-  if (strlen(buf) != 0) {
-    add_history(buf);
-    strcpy(str, buf);
-    return 0;
-  } else {
-    return 1;
+  switch(sig) {
+  case SIGHUP:
+    got_sighup = 1;
+    return;
+  case SIGINT:
+    got_sigint = 1;
+    return;
+  case SIGTERM:
+    got_sigterm = 1;
+    return;
+  case SIGUSR1:
+    got_sigusr1 = 1;
+    return;
+  case SIGUSR2:
+    got_sigusr2 = 1;
+    return;
+  case SIGCHLD:
+    o_errno = errno; /* Save errno */
+    got_sigchld = 1;
+    waitpid(-1, NULL, WNOHANG);
+    errno = o_errno; /* restore errno (in case reset by waitpid) */
+    return;
   }
 }
 
-
-int main()
+/* Setup signal handlers
+ */
+int set_sig_handlers(void)
 {
-  char inputString[MAXCOM], *parsedArgs[MAXLIST];
-  char* parsedArgsPiped[MAXLIST];
-  int execFlag = 0;
-  init_shell();
+int err = 0;
+struct sigaction act;
 
-  while (1) {
-    // print shell line
-    // take input
-    if (takeInput(inputString))
-      continue;
-    // execflag returns zero if there is no command
-    // or it is a builtin command,
-    // 1 if it is a simple command
-    // 2 if it is including a pipe.
 
-  return 0;
+got_signal     = 0;
+got_sighup     = 0;
+got_sigint     = 0;
+got_sigterm    = 0;
+got_sigusr1    = 0;
+got_sigusr2    = 0;
+
+
+
+act.sa_handler = sig_handler;
+sigemptyset(&act.sa_mask);
+act.sa_flags = SA_RESTART;
+
+if(sigaction(SIGHUP, &act, NULL) < 0)
+{
+log_msg(LOG_ERR, "* Error setting SIGHUP handler: %s",
+strerror(errno));
+err++;
 }
+
+if(sigaction(SIGINT, &act, NULL) < 0)
+{
+log_msg(LOG_ERR, "* Error setting SIGINT handler: %s",
+strerror(errno));
+err++;
+}
+
+if(sigaction(SIGTERM, &act, NULL) < 0)
+{
+log_msg(LOG_ERR, "* Error setting SIGTERM handler: %s",
+strerror(errno));
+err++;
+}
+
+if(sigaction(SIGUSR1, &act, NULL) < 0)
+{
+log_msg(LOG_ERR, "* Error setting SIGUSR1 handler: %s",
+strerror(errno));
+err++;
+}
+
+if(sigaction(SIGUSR2, &act, NULL) < 0)
+{
+log_msg(LOG_ERR, "* Error setting SIGUSR2 handler: %s",
+strerror(errno));
+err++;
+}
+
+if(sigaction(SIGCHLD, &act, NULL) < 0)
+{
+log_msg(LOG_ERR, "* Error setting SIGCHLD handler: %s",
+strerror(errno));
+err++;
+}
+
+return(err);
+}
+
+int sig_do_stop(void)
+{
+  /* Any signal except USR1, USR2, and SIGCHLD mean break the loop.
+   */
+if(got_signal != 0)
+{
+if(got_sigint || got_sigterm || got_sighup)
+{
+return 1;
+}
+else if(got_sigusr1 || got_sigusr2)
+{
+
+
+got_sigusr1 = got_sigusr2 = 0;
+got_signal = 0;
+}
+else
+got_signal = 0;
+}
+return 0;
+}
+
+/**
+ * main - dddd
+ * @argv: dsdd
+ * @argc: dsqdd
+ * @env: sdsd
+ * Return: ffd
+ */
+int main(int argc, char **argv, char **env)
+{
+size_t len = 0;
+char *buf = 0;
+char *token = 0;
+int status = 0;
+pid_t child = 0;
+
+
+while (getline(&buf, &len, stdin) != -1)
+{
+token = strtok(buf, "\n");
+
+child = fork();
+
+if (child == 0)
+{
+if (execve(token, argv, env) == -1)
+perror("./simpleshell");
+free(buf);
+return (0);
+}
+else
+wait(&status);
+buf = NULL;
+}
+return (0);
 }
