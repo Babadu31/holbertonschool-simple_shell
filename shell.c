@@ -8,11 +8,12 @@
 /**
  * main - dddd
  * @argv: dsdd
+ * @argc: dsqdd
  * @env: sdsd
  * Return: ffd
  */
 
-int main(char **argv, char **env)
+int main(int argc, char **argv, char **env)
 {
 size_t len;
 char *buf;
@@ -33,6 +34,11 @@ if (execve(token, argv, env) == -1)
 perror("./simpleshell");
 free(buf);
 return (0);
+if (argc != 3)
+{
+printf("Usage: ./program string1 string2\n");
+exit(EXIT_FAILURE);
+}
 }
 else
 wait(&status);
