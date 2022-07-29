@@ -15,11 +15,11 @@
 
 int main(int argc, char **argv, char **env)
 {
-size_t len;
-char *buf;
-char *token;
-int status;
-pid_t child;
+size_t len = 0;
+char *buf = 0;
+char *token = 0;
+int status = 0;
+pid_t child = 0;
 
 
 while (getline(&buf, &len, stdin) != -1)
@@ -35,10 +35,12 @@ perror("./simpleshell");
 free(buf);
 return (0);
 if (argc != 3)
+
 {
 printf("Usage: ./program string1 string2\n");
 exit(EXIT_FAILURE);
 }
+
 }
 else
 wait(&status);
