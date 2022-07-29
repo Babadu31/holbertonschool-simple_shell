@@ -34,11 +34,6 @@ if (execve(token, argv, env) == -1)
 perror("./simpleshell");
 free(buf);
 return (0);
-{
-printf("Usage: ./program string1 string2\n");
-exit(EXIT_FAILURE);
-}
-
 }
 else
 wait(&status);
