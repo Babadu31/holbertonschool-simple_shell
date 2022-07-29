@@ -24,6 +24,7 @@ pid_t child = 0;
 
 while (getline(&buf, &len, stdin) != -1)
 {
+(void)argc;
 token = strtok(buf, "\n");
 
 child = fork();
