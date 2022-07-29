@@ -25,14 +25,14 @@ pid_t child = 0;
 while (getline(&buf, &len, stdin) != -1)
 {
 (void)argc;
-token = strtok(buf, "\n" );
+token = strtok(buf, "\n");
 
 child = fork();
 
 if (child == 0)
 {
 if (execve(token, argv, env) == -1)
-perror("./simpleshell");
+perror("./shell");
 return (0);
 }
 else
