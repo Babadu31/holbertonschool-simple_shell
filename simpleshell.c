@@ -25,7 +25,7 @@ void free_memory(char *pointer)
 
 char **mystrtok(char *buf)
 {
-	char *token = NULL, **args = calloc(500, sizeof(char *));
+	char *token = NULL, **args = calloc(4, sizeof(char *));
 	char *delims = " \n";
 	unsigned int i = 0;
 
