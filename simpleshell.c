@@ -46,10 +46,10 @@ char **mystrtok(char *buf)
 
 int main(void)
 {
-	char *buf = NULL, *token, *delims = " \n", **args = NULL;
+	char *buf = NULL, **args = NULL;
 	ssize_t nread;
 	size_t len = 0;
-	int b = 0, status = 0;
+	int status = 0;
 	pid_t child;
 
 	while ((nread = getline(&buf, &len, stdin)) != -1)
