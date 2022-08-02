@@ -35,6 +35,8 @@ int main(void) {
 
   while ((nread = getline(&buf, &len, stdin)) != -1) {
     args = mystrtok(buf, args);
+	if (args == NULL)
+      continue;
     child = fork();
     if (child == -1) {
       perror("Error:");
