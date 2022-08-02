@@ -1,44 +1,59 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
-/**
- * main - dddd
- * @argv: dsdd
- * @argc: dsqdd
- * @env: sdsd
- * Return: ffd
- */
+extern char **environ;
 
-int main(int argc, char **argv, char **env)
-{
-size_t len = 0;
-char *buf = 0;
-char *token = 0;
-int status = 0;
-pid_t child = 0;
-
-
-while (getline(&buf, &len, stdin) != -1)
-{
-(void)argc;
-token = strtok(buf, " \n ");
-
-child = fork();
-
-if (child == 0)
-{
-if (execve(token, argv, env) == -1)
-perror("Error: ");
-return (-1);
+void free_memory(char *pointer) {
+  free(pointer);
+  pointer = NULL;
 }
-else
-wait(&status);
+
+char **mystrtok(char *buf, char **args) {
+  char *token = NULL;
+  char *delims = " \n";
+  unsigned int i = 0;
+
+  token = strtok(buf, delims);
+  while (token) {
+    args[i] = token;
+    token = strtok(NULL, delims);
+    i++;
+  }
+  return (args);
 }
-free(buf);
-buf = NULL;
-return (0);
+
+int main(void) {
+  char *buf = NULL, *token, **args = calloc(4, sizeof(char *));
+  ssize_t nread;
+  size_t len = 0;
+  int b = 0, status = 0;
+  pid_t child;
+
+  while ((nread = getline(&buf, &len, stdin)) != -1) {
+    args = mystrtok(buf, args);
+    child = fork();
+    if (child == -1) {
+      perror("Error:");
+      return (1);
+    }
+    if (child == 0) {
+      if (args[0] && execve(args[0], args, environ) == -1) {
+        perror("execve");
+      }
+      free_memory(buf);
+      free(args);
+      args = NULL;
+    } else {
+      wait(&status);
+    }
+  }
+
+  free_memory(buf);
+  free(args);
+  args = NULL;
+  return (0);
 }
