@@ -27,10 +27,10 @@ char **mystrtok(char *buf, char **args) {
 }
 
 int main(void) {
-  char *buf = NULL, *token, **args = calloc(4, sizeof(char *));
+  char *buf = NULL, **args = calloc(4, sizeof(char *));
   ssize_t nread;
   size_t len = 0;
-  int b = 0, status = 0;
+  status = 0;
   pid_t child;
 
   while ((nread = getline(&buf, &len, stdin)) != -1) {
