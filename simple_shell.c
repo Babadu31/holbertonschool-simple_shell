@@ -17,8 +17,7 @@ int main(void)
 	while ((nread = getline(&buf, &len, stdin)) != -1)
 	{
 		args = split(buf, " \n");
-		for (i = 0; args[i]; i++)
-		if (args == NULL)
+		if (args == NULL || args[0] == NULL)
 			continue;
 		path_handler(args);
 		child = fork();
