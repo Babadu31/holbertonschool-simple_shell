@@ -19,6 +19,6 @@ char **mystrtok(char *buf, char **args);
 
 char **split(char *buf, char *del, char **args);
 
-void path_handler(char **args);
+void path_handler(char **args, char **path_array);
 
 #endif
