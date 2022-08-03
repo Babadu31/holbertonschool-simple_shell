@@ -14,6 +14,7 @@ int main(void)
 	pid_t child;
 	char *del = " \n";
 	int bufsize = S_SHELL_BUFSIZE;
+
 	char *buf = calloc(bufsize, sizeof(char));
 	char **args = calloc(bufsize, sizeof(char));
 	char **path_array = calloc(bufsize, sizeof(char));
