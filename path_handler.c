@@ -36,8 +36,8 @@ void path_handler(char **args)
 		if (access(mem, F_OK) == 0)
 			break;
 	}
-	/*free_array_memory(splitor);
-	free_memory(args[0]);*/
+	free_array_memory(splitor);
+	free_memory(args[0]);
 	/** Redefine the command pointer to the adress*/
 	/* of the command with the path in it so the*/
 	/* execve can execute the command properly */
