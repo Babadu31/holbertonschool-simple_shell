@@ -8,19 +8,14 @@
 
 int main(void)
 {
-	char *buf = NULL, **args = calloc(10, sizeof(char *)), cmd;
+	char *buf = NULL, **args = calloc(10, sizeof(char *));
 	ssize_t nread;
 	size_t len = 0;
-	int status = 0, i, j;
+	int status = 0, i;
 	pid_t child;
 
 	while ((nread = getline(&buf, &len, stdin)) != -1)
 	{
-		if (buf == "\n")
-		{
-			free_memory(buf);
-			continue;
-		}
 		args = split(buf, " \n");
 		for (i = 0; args[i]; i++)
 			printf("%s\n", args[i]);

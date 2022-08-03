@@ -10,6 +10,7 @@ void path_handler(char **args)
 	char *path = strdup(getenv("PATH"));
 	char *mem = NULL;
 	char **splitor = NULL;
+	int i;
 
 	/** create the path if it doesn't exist */
 	if (path == NULL)
@@ -21,7 +22,7 @@ void path_handler(char **args)
 		splitor = split(path, ":");
 		free_memory(path);
 		/** Check if the command written is present in one of the path */
-		for (int i = 0; splitor[i]; i++)
+		for (i = 0; splitor[i]; i++)
 		{
 			mem = (char *)calloc(sizeof(char),
 					(strlen(splitor[i]) + 1 + strlen(args[0]) + 1));
