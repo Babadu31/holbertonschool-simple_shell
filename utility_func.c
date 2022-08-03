@@ -41,19 +41,27 @@ void free_memory(char *pointer)
 
 char **split(char *buf, char *del)
 {
-	char *token = NULL;
-	char **args = NULL;
+	int bufsize = S_SHELL_BUFSIZE;
+	char **args = malloc(bufsize * sizeof(char*));
+	char *token;
 	int i = 0;
 
 	token = strtok(buf, del);
 	while (token)
 	{
-		args = realloc(args, ((i + 1) * sizeof(char *)));
-		args[i] = strdup(token);
-		token = strtok(NULL, del);
+		args[i] = token;
 		++i;
+		if (i >= bufsize)
+		{
+			bufsize += S_SHELL_BUFSIZE;
+			token = realloc(token, bufsize * sizeof(char*));
+			if (!token)
+			{
+				exit(EXIT_FAILURE);
+			}
+		}
+		token = strtok(NULL, del);
 	}
-	args = realloc(args, ((i + 1) * sizeof(char *)));
 	args[i] = NULL;
-	return (args);
+	return args;
 }

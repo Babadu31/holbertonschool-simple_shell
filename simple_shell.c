@@ -8,15 +8,18 @@
 
 int main(void)
 {
-	char *buf = NULL, **args = calloc(10, sizeof(char *));
 	ssize_t nread;
 	size_t len = 0;
 	int status = 0;
 	pid_t child;
+	char *del = " \n";
+	int bufsize = S_SHELL_BUFSIZE;
+	char *buf = malloc(sizeof(char) * bufsize);
+	char **args;
 
 	while ((nread = getline(&buf, &len, stdin)) != -1)
 	{
-		args = split(buf, " \n");
+		args = split(buf, del);
 		if (args == NULL || args[0] == NULL)
 			continue;
 		path_handler(args);

@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
-
+#define S_SHELL_BUFSIZE 64
 extern char **environ;
 
 void free_array_memory(char **array);
@@ -19,6 +19,6 @@ char **mystrtok(char *buf, char **args);
 
 char **split(char *buf, char *del);
 
-void path_handler(char **command);
+void path_handler(char **args);
 
 #endif
