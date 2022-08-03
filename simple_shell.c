@@ -18,7 +18,6 @@ int main(void)
 	{
 		args = split(buf, " \n");
 		for (i = 0; args[i]; i++)
-			printf("%s\n", args[i]);
 		if (args == NULL)
 			continue;
 		path_handler(args);
