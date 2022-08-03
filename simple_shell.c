@@ -13,11 +13,9 @@ int main(void)
 	int status = 0;
 	pid_t child;
 	char *del = " \n";
-	int bufsize = S_SHELL_BUFSIZE;
-
-	char *buf = calloc(bufsize, sizeof(char));
-	char **args = calloc(bufsize, sizeof(char));
-	char **path_array = calloc(bufsize, sizeof(char));
+	char *buf = calloc(64, sizeof(char));
+	char **args = calloc(64, sizeof(char));
+	char **path_array = calloc(64, sizeof(char));
 
 	while ((nread = getline(&buf, &len, stdin)) != -1)
 	{

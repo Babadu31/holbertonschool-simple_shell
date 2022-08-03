@@ -8,7 +8,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#define S_SHELL_BUFSIZE 64
 extern char **environ;
 
 void free_array_memory(char **array);
