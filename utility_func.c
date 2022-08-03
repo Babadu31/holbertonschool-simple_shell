@@ -42,7 +42,6 @@ void free_memory(char *pointer)
 char **split(char *buf, char *del, char **args)
 {
 	int i = 0;
-	size_t	bufsize = S_SHELL_BUFSIZE;
 	char *token;
 
 	token = strtok(buf, del);
