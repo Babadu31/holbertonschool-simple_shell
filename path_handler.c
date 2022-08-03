@@ -35,14 +35,11 @@ void path_handler(char **args)
 		/* with the path and if not free all */
 		if (access(mem, F_OK) == 0)
 			break;
-		free_memory(mem);
 	}
-	free_array_memory(splitor);
-	free_memory(args[0]);
+	/*free_array_memory(splitor);
+	free_memory(args[0]);*/
 	/** Redefine the command pointer to the adress*/
 	/* of the command with the path in it so the*/
 	/* execve can execute the command properly */
 	args[0] = mem;
-	free_memory(mem);
 }
-
