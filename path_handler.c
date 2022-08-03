@@ -10,13 +10,15 @@ void path_handler(char **args)
 	int i;
 	char *path = strdup(getenv("PATH"));
 	char *mem = NULL;
-	char **splitor = NULL;
+	int bufsize = S_SHELL_BUFSIZE;
+	char **splitor = malloc(bufsize * sizeof(char*));
+
 
 	/** if it doesn't exist, alors on s'arrete là*/
 	if (path == NULL)
 		return;
 
-	splitor = split(path, ":");
+	splitor = split(path, ":", splitor);
 	free_memory(path);
 	/** Check if the command written is present in one of the path */
 	for (i = 0; splitor[i]; i++)
@@ -33,13 +35,14 @@ void path_handler(char **args)
 		/* with the path and if not free all */
 		if (access(mem, F_OK) == 0)
 			break;
-		/*	free_memory(mem);*/
+		free_memory(mem);
 	}
-	/*free_array_memory(splitor);*/
-	/*free_memory(args[0]);*/
+	free_array_memory(splitor);
+	free_memory(args[0]);
 	/** Redefine the command pointer to the adress*/
 	/* of the command with the path in it so the*/
 	/* execve can execute the command properly */
 	args[0] = mem;
+	free_memory(mem);
 }
 

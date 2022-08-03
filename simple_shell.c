@@ -15,11 +15,11 @@ int main(void)
 	char *del = " \n";
 	int bufsize = S_SHELL_BUFSIZE;
 	char *buf = malloc(sizeof(char) * bufsize);
-	char **args;
+	char **args = malloc(sizeof(char) * bufsize);
 
 	while ((nread = getline(&buf, &len, stdin)) != -1)
 	{
-		args = split(buf, del);
+		args = split(buf, del, args);
 		if (args == NULL || args[0] == NULL)
 			continue;
 		path_handler(args);
@@ -37,11 +37,11 @@ int main(void)
 				exit(EXIT_FAILURE);
 			}
 			free_array_memory(args);
-			free_memory(buf);
+			free(buf);
 		} else
 			wait(&status);
 	}
 	free_array_memory(args);
-	free_memory(buf);
+	free(buf);
 	return (0);
 }

@@ -39,12 +39,11 @@ void free_memory(char *pointer)
  * Return: array full of pointers to command + arguments
  */
 
-char **split(char *buf, char *del)
+char **split(char *buf, char *del, char **args)
 {
-	int bufsize = S_SHELL_BUFSIZE;
-	char **args = malloc(bufsize * sizeof(char*));
 	char *token;
 	int i = 0;
+	size_t	bufsize = S_SHELL_BUFSIZE;
 
 	token = strtok(buf, del);
 	while (token)
@@ -63,5 +62,6 @@ char **split(char *buf, char *del)
 		token = strtok(NULL, del);
 	}
 	args[i] = NULL;
+	free_memory(token);
 	return args;
 }
