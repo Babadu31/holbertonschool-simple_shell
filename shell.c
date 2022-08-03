@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
+#include "shell.h"
 
 extern char **environ;
 
@@ -35,23 +30,25 @@ int main(void) {
 
   while ((nread = getline(&buf, &len, stdin)) != -1) {
     args = mystrtok(buf, args);
-	if (args == NULL)
+    if (args == NULL)
       continue;
+      path_handler(args[0]);
     child = fork();
     if (child == -1) {
       perror("Error:");
       return (1);
-    }
+    }   
     if (child == 0) {
       if (args[0] && execve(args[0], args, environ) == -1) {
         perror("execve");
-      }
+        exit(0);
+      }   
       free_memory(buf);
       free(args);
       args = NULL;
     } else {
       wait(&status);
-    }
+    }   
   }
 
   free_memory(buf);
