@@ -57,7 +57,7 @@ char **split(char *buf, char *del)
 	token = strtok(buf, del);
 	while (token)
 	{
-		printf("[%s]\n", token);
+		/*printf("[%s]\n", token);*/
 		args = realloc(args, (i + 2) * sizeof(char*));
 		args[i] = strdup(token);
 		token = strtok(NULL, del);
