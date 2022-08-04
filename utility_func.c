@@ -10,25 +10,34 @@ void free_array_memory(char **array)
 {
 	int i;
 
-	for (i = 0; array[i]; i++)
+	if (array)
 	{
-		free(array[i]);
-		array[i] = NULL;
+		for (i = 0; array[i]; i++)
+		{
+			if (array[i])
+			{
+				free(array[i]);
+				array[i] = NULL;
+			}
+		}
+		free(array);
+		array = NULL;
 	}
-	free(array);
-	array = NULL;
 }
 
 /**
-  * free_memory - free pointer
-  * @pointer: pointer
-  *
-  */
+ * free_memory - free pointer
+ * @pointer: pointer
+ *
+ */
 
 void free_memory(char *pointer)
 {
-	free(pointer);
-	pointer = NULL;
+	if (pointer)
+	{
+		free(pointer);
+		pointer = NULL;
+	}
 }
 
 /**
@@ -39,15 +48,18 @@ void free_memory(char *pointer)
  * Return: array full of pointers to command + arguments
  */
 
-char **split(char *buf, char *del, char **args)
+char **split(char *buf, char *del)
 {
 	int i = 0;
 	char *token;
+	char **args = calloc(1, sizeof(char*));
 
 	token = strtok(buf, del);
 	while (token)
 	{
-		args[i] = token;
+		printf("[%s]\n", token);
+		args = realloc(args, (i + 2) * sizeof(char*));
+		args[i] = strdup(token);
 		token = strtok(NULL, del);
 		++i;
 	}
