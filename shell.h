@@ -16,7 +16,7 @@ void free_memory(char *pointer);
 
 char **mystrtok(char *buf, char **args);
 
-char **split(char *buf, char *del);
+char **split(char **args, char *buf, char *del);
 
 void path_handler(char **args);
 

@@ -6,23 +6,19 @@
  *
  */
 
-void free_array_memory(char **array)
-{
-	int i;
+void free_array_memory(char **array) {
+  int i;
 
-	if (array)
-	{
-		for (i = 0; array[i]; i++)
-		{
-			if (array[i])
-			{
-				free(array[i]);
-				array[i] = NULL;
-			}
-		}
-		free(array);
-		array = NULL;
-	}
+  if (array) {
+    for (i = 0; array[i]; i++) {
+      if (array[i]) {
+        free(array[i]);
+        array[i] = NULL;
+      }
+    }
+    free(array);
+    array = NULL;
+  }
 }
 
 /**
@@ -31,13 +27,11 @@ void free_array_memory(char **array)
  *
  */
 
-void free_memory(char *pointer)
-{
-	if (pointer)
-	{
-		free(pointer);
-		pointer = NULL;
-	}
+void free_memory(char *pointer) {
+  if (pointer) {
+    free(pointer);
+    pointer = NULL;
+  }
 }
 
 /**
@@ -48,21 +42,18 @@ void free_memory(char *pointer)
  * Return: array full of pointers to command + arguments
  */
 
-char **split(char *buf, char *del)
-{
-	int i = 0;
-	char *token;
-	char **args = calloc(1, sizeof(char*));
+char **split(char **args, char *buf, char *del) {
+  int i = 0;
+  char *token;
 
-	token = strtok(buf, del);
-	while (token)
-	{
-		/*printf("[%s]\n", token);*/
-		args = realloc(args, (i + 2) * sizeof(char*));
-		args[i] = strdup(token);
-		token = strtok(NULL, del);
-		++i;
-	}
-	args[i] = NULL;
-	return args;
+  token = strtok(buf, del);
+  while (token) {
+    /*printf("[%s]\n", token);*/
+    args = realloc(args, (i + 2) * sizeof(char *));
+    args[i] = token;
+    token = strtok(NULL, del);
+    i++;
+  }
+  args[i] = NULL;
+  return args;
 }

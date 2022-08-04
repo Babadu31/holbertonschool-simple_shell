@@ -13,10 +13,10 @@ int main(void) {
   pid_t child;
   char *del = " \n";
   char *buf = NULL;
-  char **args = NULL;
+  char **args = calloc(1, sizeof(char *));
 
   while ((nread = getline(&buf, &len, stdin)) != -1) {
-    args = split(buf, del);
+    args = split(args, buf, del);
     if (args == NULL || args[0] == NULL)
       continue;
     /*path_handler(args);*/
@@ -30,13 +30,12 @@ int main(void) {
         perror("execve");
         exit(EXIT_FAILURE);
       }
-      free_array_memory(args);
+      free(args);
       free_memory(buf);
     } else
       wait(&status);
   }
-  /*free_array_memory(path_array); */
-  free_array_memory(args);
+  free(args);
   free_memory(buf);
   return (0);
 }
