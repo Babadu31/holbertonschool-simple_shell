@@ -1,6 +1,6 @@
 # holbertonschool-simple_shell
 
-![Alt text](./images/Simple Shell.jpg?raw=true "Title")
+![Alt text](./images/SimpleShell.jpg)
 
 # Summary
 
