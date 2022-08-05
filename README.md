@@ -1,6 +1,6 @@
 # holbertonschool-simple_shell
 
-![Alt text](./images/SimpleShell.jpg)
+![Alt text](./images/shell_in_shell.jpeg)
 
 # Summary
 
@@ -454,6 +454,7 @@ Simple shell 1.0 +
 
 # flowcharts
 
+![Alt text](./images/SimpleShell.jpg)
 
 # Sources
 
@@ -583,3 +584,7 @@ https://man7.org/linux/man-pages/man2/wait3.2.html
 https://man7.org/linux/man-pages/man2/write.2.html
 
 # Tools
+
+C Language
+
+![Alt text](./images/Failure.jpg)
