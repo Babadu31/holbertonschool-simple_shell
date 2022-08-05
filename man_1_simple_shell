@@ -1,20 +1,31 @@
 .TH holbertonschool-simple_shell
 .SH NAME
-simple_shell -
+Our Simple (S)Hell -
 .SH SYNOPSIS
+We wrote a program that launch a mini simple (s)hell into your terminal that work exactly (not really) like the basic shell.
 
 .SH DESCRIPTION
+.TP This program launch a simple shell that can execute basics commands. It work in interative and no-interactive mode. It can also handle argument and option.
 
-.SH OPTIONS
-.TP
-.BR
+.TP You can either write the command with the full path already in it like "/bin/ls" or you can just type the command and our program will search the path itself.
 
-.TP
-.BR
+.TP For the interactive/no-interactive mode, it work like this :
 
-.TP
-.BR
+- ./main - This will launch the simple shell and open a prompt were you can write your command and execute them. You need to press Ctrl+C or Ctrl+D to exit the simple shell.
+
+- echo "ls" | ./main - This will launch our program in non-interactive mode, this mean that the command inside the echo will be executed through our simple shell but just once. This will not launch the simple shell itself, just execute the command like we were in the simple shell. 
+
+.SH EXAMPLES
+.TP/bin/ls - ls - echo "/bin/ls" | ./main
+.BR This will list the file
+
+.TP/bin/pwd - pwd - echo "pwd" | ./main
+.BR This will print the current working directory
 
 .SH AUTHOR
+Quentin RIO
+Guenoel ANDRIEUX
+Bastien MISSUD
 
-.SH SEE ALSO
+.SH ALSO
+.TP This was made for our group project for HOLBERTON.
